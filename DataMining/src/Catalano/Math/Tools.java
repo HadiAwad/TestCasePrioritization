@@ -29,9 +29,8 @@ import Catalano.Core.DoubleRange;
 import Catalano.Core.FloatRange;
 import Catalano.Core.IntRange;
 import Catalano.Math.Functions.Gamma;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+
+import java.util.*;
 
 /**
  * Set of mathematical tools.
@@ -204,13 +203,31 @@ public final class Tools {
      * @param ranges List of ranges.
      */
     public static void Clamp(int[] values, List<IntRange> ranges){
-        for (int i = 0; i < values.length; i++) {
-            IntRange range = ranges.get(i);
-            values[i] = values[i] < range.getMin() ? range.getMin() : values[i];
-            values[i] = values[i] > range.getMax() ? range.getMax() : values[i];
+
+        //convert it to map
+        int[] clonedValues = values.clone();
+        Arrays.sort(clonedValues);
+        HashMap<Integer, Integer> mappedValues = new HashMap<>();
+        for (int i = 0; i < clonedValues.length; i++) {
+            mappedValues.put(clonedValues[i],i);
         }
+
+        Set<Integer> hashSet = new HashSet<>();
+        for (int i = 0; i < values.length; i++) {
+            int indexInSortedArray = mappedValues.get(values[i]);
+            int newValue = indexInSortedArray +1;
+            if(hashSet.contains(newValue)){
+                values[i] = -1;
+            }else{
+                hashSet.add(newValue);
+                values[i] = newValue;
+            }
+
+        }
+
+       // System.out.println("values clamped : "+values);
     }
-    
+
     /**
      * Clamp values.
      * @param values Values.

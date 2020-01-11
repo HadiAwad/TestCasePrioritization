@@ -25,7 +25,7 @@ public class SSARunner {
         for (int i = 0; i < numberOfTestCases; i++) {
             boundConstraints.add(new IntRange(1,numberOfTestCases));
         }
-        IntStream.rangeClosed(1, 3)
+        IntStream.rangeClosed(1, 5)
                 .forEach(i -> {
                     SalpSwarmAlgorithm salp = new SalpSwarmAlgorithm(numberOfTestCases);
                     IEvoIterationListener iEvoIterationListener = new IEvoIterationListener() {

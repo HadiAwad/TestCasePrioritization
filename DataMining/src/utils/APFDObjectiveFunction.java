@@ -26,7 +26,11 @@ public class APFDObjectiveFunction implements IObjectiveFunction {
                 }
             }
             //if it was not updated then leave it as huge value;
-            summation += index;
+            if(index == Integer.MAX_VALUE){
+                //do not sum
+            }else{
+                summation += index;
+            }
         }
 
         return (1.0 - (summation / (numberOfTestCases * numberOfTestFaults))) + (1.0 / (2.0 * numberOfTestCases));
@@ -34,8 +38,12 @@ public class APFDObjectiveFunction implements IObjectiveFunction {
 
     public int findIndexFromWithinOrder(int[] order, int testCaseNumber) {
         for (int i = 0; i < order.length; i++) {
-            if (((int) order[i]) == testCaseNumber) {
-                return i + 1;
+            if(order[i] == -1 ){
+                continue;
+            }else {
+                if ( order[i] == testCaseNumber) {
+                    return i + 1;
+                }
             }
         }
         return -1;

@@ -15,12 +15,15 @@ public class FitnessBasedOnTime implements IObjectiveFunction{
         double totalTime = 0.0;
 
         for (int i = 0; i < testCaseOrder.length ; i++) {
-            if(testCaseNumberIsZeroIndexed){
-                totalTime +=this.testCaseET[testCaseOrder[i]];
+            if(testCaseOrder[i] == -1){
+                continue;
             }else{
-                totalTime +=this.testCaseET[testCaseOrder[i]-1];
+                if(testCaseNumberIsZeroIndexed){
+                    totalTime +=this.testCaseET[testCaseOrder[i]];
+                }else{
+                    totalTime +=this.testCaseET[testCaseOrder[i]-1];
+                }
             }
-
         }
 
         return 1/totalTime;

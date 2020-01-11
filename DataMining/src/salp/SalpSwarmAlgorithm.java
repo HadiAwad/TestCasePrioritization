@@ -73,13 +73,16 @@ public class SalpSwarmAlgorithm extends BaseEvolutionaryOptimization {
                 if(i <= population.size() / 2){
                     for (int j = 0; j < boundConstraints.size(); j++) {
                         IntRange range = boundConstraints.get(j);
-                        if(rand.nextDouble() < 0.5)
-                            population.get(i).getLocation()[j] = best[j] + (int)Math.ceil(c1 * Individual.generateRandom(range.getMin(), range.getMax()));
-                        else
-                            population.get(i).getLocation()[j] = best[j] - (int)Math.ceil(c1 * Individual.generateRandom(range.getMin(), range.getMax()));
+                        int newPosition;
+                        if(rand.nextDouble() < 0.5) {
+                            newPosition = best[j] + (int) Math.ceil(c1 * Individual.generateRandom(range.getMin(), range.getMax()));
+                        }
+                        else {
+                            newPosition = best[j] - (int) Math.ceil(c1 * Individual.generateRandom(range.getMin(), range.getMax()));
+                        }
+                        population.get(i).getLocation()[j] = newPosition;
                     }
                 }
-
                 else if (i > (population.size()/2) && i < population.size()){
                     int[] salp1 = population.get(i-1).getLocation();
                     int[] salp2 = population.get(i).getLocation();

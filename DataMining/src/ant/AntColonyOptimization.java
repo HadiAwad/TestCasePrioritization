@@ -62,13 +62,13 @@ public class AntColonyOptimization {
      * Perform ant optimization
      */
     public void startAntOptimization() {
-        IntStream.rangeClosed(1, 3)
+        IntStream.rangeClosed(1, 5)
                 .forEach(i -> {
                     System.out.println("*******************");
                     System.out.println("Attempt #" + i);
                     int[] testCaseOrder = solve();
                     double efftiveness = algorithmFitnessEvaluation.Compute(testCaseOrder);
-                    System.out.println("Best test suite order: " + Arrays.toString(globalBestTestCaseOrder));
+                    System.out.println("Best test suite order: " + Arrays.toString(testCaseOrder));
                     System.out.println("efftiveness: " + efftiveness);
                     System.out.println("*******************");
                 });
@@ -86,8 +86,21 @@ public class AntColonyOptimization {
                     updatePheromoneValues();
                     updateGlobalBest();
                 });
-        System.out.println("Best test suite order: " + Arrays.toString(globalBestTestCaseOrder));
-        return globalBestTestCaseOrder.clone();
+        System.out.println("Before: " + Arrays.toString(globalBestTestCaseOrder));
+
+        int[] answer = globalBestTestCaseOrder.clone();
+        HashSet<Integer> set = new HashSet<>();
+
+        for(int i =0 ; i < answer.length ; i++ ){
+            if(set.contains(answer[i])){
+                answer[i] = -1;
+            }else{
+                set.add(answer[i]);
+                answer[i] = answer[i]+1;
+
+            }
+        }
+        return answer;
     }
 
     /**
